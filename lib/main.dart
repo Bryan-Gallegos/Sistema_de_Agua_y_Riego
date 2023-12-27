@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
@@ -86,7 +85,7 @@ class HomeScreen extends StatelessWidget {
 
   String _getDayOfWeek(int dayOfWeek) {
     List<String> daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    return daysOfWeek[dayOfWeek];
+    return daysOfWeek[dayOfWeek - 1];
   }
 
   String _getMonth(int month) {
@@ -112,18 +111,46 @@ class RegistroScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(-16.409, -71.537),
-                zoom: 13.0,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId('arequipa'),
-                  position: LatLng(-16.409, -71.537),
-                  infoWindow: InfoWindow(title: 'Arequipa'),
+            child: ListView(
+              children: [
+                Image.asset(
+                  'assets/mapa_arequipa.jpg', // Reemplaza con el nombre de tu imagen
+                  fit: BoxFit.cover,
+                  height: 200.0,
                 ),
-              },
+                SizedBox(height: 16.0),
+                DataTable(
+                  columns: [
+                    DataColumn(label: Text('Día')),
+                    DataColumn(label: Text('Temperatura')),
+                    DataColumn(label: Text('Precipitación (mm)')),
+                    DataColumn(label: Text('ETc')),
+                    DataColumn(label: Text('ETo')),
+                    DataColumn(label: Text('Kc')),
+                    DataColumn(label: Text('Humedad')),
+                    DataColumn(label: Text('Agua Aplicada(L)')),
+                    DataColumn(label: Text('Duración Riesgo(min)')),
+                    DataColumn(label: Text('Etapa')),
+                    DataColumn(label: Text('Riesgos')),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text('Lunes')),
+                      DataCell(Text('25°C')),
+                      DataCell(Text('3.5 mm')),
+                      DataCell(Text('0.8')),
+                      DataCell(Text('1.0')),
+                      DataCell(Text('0.85')),
+                      DataCell(Text('75%')),
+                      DataCell(Text('10 L')),
+                      DataCell(Text('30 min')),
+                      DataCell(Text('Etapa 1')),
+                      DataCell(Text('Alto')),
+                    ]),
+                    // Agrega más filas según sea necesario
+                  ],
+                ),
+              ],
             ),
           ),
           Padding(
